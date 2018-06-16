@@ -1,6 +1,6 @@
 language: cpp
-compiler: gcc
-sudo: require
+
+sudo: required
 dist: trusty
 
 env:
@@ -11,21 +11,13 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-#    - llvm-toolchain-trusty-3.9
     packages: &native_deps
     - cmake
     - libusb-1.0-0-dev
     - libfftw3-dev
-#    - libqt5qml5
     - libgtest-dev
-#    - libqt5opengl5-dev
-#    - qtbase5-dev
-#    - qttools5-dev
-#    - qttools5-dev-tools
     - gcc-5
     - g++-5
-#    - doxygen
-#    - clang-3.6
 
 # We are testing
 # * linux with g++5 (and clang 3.6)
@@ -35,9 +27,6 @@ matrix:
     - compiler: gcc
       env: CMAKE_CXX_COMPILER=g++-5
       os: linux
-#    - compiler: clang
-#      env: CMAKE_CXX_COMPILER=clang++-3.6
-#      os: linux
     - compiler: clang
       env: CMAKE_CXX_COMPILER=/usr/bin/clang++
       os: osx
@@ -49,16 +38,10 @@ before_install:
 before_script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ../
+    - cmake -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH ../
 
 script:
     - make -j4
-    - make DESTDIR=appdir -j$(nproc) install ; find appdir/
-    - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-    - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-    - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-    - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
-    - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 before_deploy:
     - sudo make package
