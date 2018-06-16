@@ -1,4 +1,4 @@
-language: cpp
+curl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagecurl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagecurl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagelanguage: cpp
 
 sudo: required
 dist: trusty
@@ -57,9 +57,8 @@ script:
     - export PATH=$(readlink -f ./squashfs-root/usr/bin):$PATH
     - ./squashfs-root/usr/bin/appimagetool -g ./appdir/ "OpenHantek-$VERSION-x86_64.AppImage"
 #   - TODO: Take care of appdir/lib/udev/rules.d/60-hantek.rules similar to https://github.com/EspoTek/Labrador/blob/master/Desktop_Interface/build_linux/AppRun
-    - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-    - bash upload.sh OpenHantek-*-x86_64.AppImage*
-
+    -  curl --upload-file OpenHantek-*-x86_64.AppImage https://transfer.sh/
+    
 before_deploy:
     - sudo make package
 
