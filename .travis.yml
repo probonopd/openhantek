@@ -56,7 +56,7 @@ script:
     - ./linuxdeployqt*.AppImage --appimage-extract
     - export PATH=$(readlink -f ./squashfs-root/usr/bin):$PATH
     - ./squashfs-root/usr/bin/appimagetool -g ./appdir/ $NAME-$VERSION-x86_64.AppImage
-#   - TODO: Take care of appdir/lib/udev/rules.d/60-hantek.rules
+#   - TODO: Take care of appdir/lib/udev/rules.d/60-hantek.rules similar to https://github.com/EspoTek/Labrador/blob/master/Desktop_Interface/build_linux/AppRun
 
 before_deploy:
     - sudo make package
