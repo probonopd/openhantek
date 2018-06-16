@@ -1,6 +1,6 @@
-curl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagecurl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagecurl --upload-file APPNAME*.AppImage https://transfer.sh/APPNAME-git.$(git rev-parse --short HEAD)-x86_64.AppImagelanguage: cpp
-
-sudo: required
+language: cpp
+compiler: gcc
+sudo: require
 dist: trusty
 
 env:
