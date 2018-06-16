@@ -1,6 +1,6 @@
 language: cpp
-
-sudo: required
+compiler: gcc
+sudo: require
 dist: trusty
 
 env:
@@ -49,10 +49,16 @@ before_install:
 before_script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH ../
+    - cmake -DCMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ../
 
 script:
     - make -j4
+    - make DESTDIR=appdir -j$(nproc) install ; find appdir/
+    - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+    - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+    - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+    - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
+    - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
 
 before_deploy:
     - sudo make package
