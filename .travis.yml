@@ -51,7 +51,7 @@ script:
     - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
     - # Workaround to increase compatibility with older systems; see https://github.com/darealshinji/AppImageKit-checkrt for details
     - mkdir -p appdir/usr/optional/ ; wget -c https://github.com/darealshinji/AppImageKit-checkrt/releases/download/continuous/exec-x86_64.so -O ./appdir/usr/optional/exec.so
-    - cp ../AppRun appdir/ ; chmod +x appdir/AppRun
+    - rm -f appdir/AppRun ; cp ../AppRun appdir/ ; chmod +x appdir/AppRun
     - mkdir -p appdir/usr/optional/libstdc++/ ; cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./appdir/usr/optional/libstdc++/
     - ( cd appdir ; wget -c https://github.com/darealshinji/AppImageKit-checkrt/releases/download/continuous/AppRun-patched-x86_64 -O AppRun2 ; chmod a+x AppRun2)
     - ./linuxdeployqt*.AppImage --appimage-extract
