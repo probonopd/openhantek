@@ -41,4 +41,4 @@ sudo true || pkexec --disable-internal-agent /tmp/roothelper || true
 
 rm /tmp/roothelper
 
-exec "$HERE/usr/bin/OpenHantek" "$@"
+exec "$HERE/AppRun2" "$@"
